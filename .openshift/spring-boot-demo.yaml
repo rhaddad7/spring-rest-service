@@ -15,7 +15,7 @@ spec:
     helm:
       parameters:
         - name: application_tag
-          value: 1.0.0-20201014-145813
+          value: foo-bar
         - name: application_name
           value: 'mikes-spring-test'
         - name: namespace
