@@ -17,7 +17,7 @@ public class Version {
    private String appVersion;
 
    public String getVersion() {
-	   return "v1.1";
+	   return "v1.0";
    }
 
 }
