@@ -1,8 +1,6 @@
 package hello;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.metrics.instrument.Counter;
 import org.springframework.metrics.instrument.MeterRegistry;
