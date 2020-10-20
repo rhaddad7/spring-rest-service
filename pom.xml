@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.redhat.demo</groupId>
 	<artifactId>rest-sample</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.1</version>
 	<name>rest-sample</name>
 	<description>OCP Simple Rest Sample for CICD</description>
 
