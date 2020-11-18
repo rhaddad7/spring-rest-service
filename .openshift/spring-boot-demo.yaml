@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mikes-spring-test
+  name: mikes-spring-demo
   namespace: cicd-tools
 spec:
   destination:
