@@ -3,10 +3,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: mikes-spring-test-qa
-  namespace: labs-cicd
+  namespace: cicd-tools
 spec:
   destination:
-    namespace: att-qa
+    namespace: spring-rest-qa
     server: 'https://kubernetes.default.svc'
   project: default
   syncPolicy:
@@ -17,9 +17,9 @@ spec:
         - name: application_tag
           value: 1.0.0-20201019-210625
         - name: application_name
-          value: 'mikes-spring-test'
+          value: 'mikes-spring-demo'
         - name: namespace
-          value: att-qa
+          value: spring-rest-qa
         - name: pipeline.source_repo 
           value: https://github.com/redhat-mal/spring-rest-service.git
         - name: pipeline.source_ref
