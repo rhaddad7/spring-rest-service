@@ -30,6 +30,8 @@ spec:
           value: 'true'
         - name: pipeline.namespace
           value: demo-pipelines
+        - name: pipeline.service_account
+          value: demo-pipelines-sa
         - name: pipeline.source_repo  
           value: https://github.com/redhat-mal/spring-rest-service.git
         - name: pipeline.source_ref
