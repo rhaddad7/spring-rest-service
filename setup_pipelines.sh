@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Installing Pipeline" 
-export KUBECONFIG=../ocp-labs-manager/config/ocp-demo-cluster/ocp-install/auth/kubeconfig
-oc login -u system:admin
+#export KUBECONFIG=../ocp-labs-manager/config/ocp-demo-cluster/ocp-install/auth/kubeconfig
+oc login $CLUSTER_URL -u $OC_USERNAME -p $OC_PASSWORD
 oc project cicd-tools
 
 git checkout stage
