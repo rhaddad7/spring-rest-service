@@ -1,0 +1,77 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "jenkins-pipeline"
+  labels:
+    app.pelorus/name: spring-rest-jenkins
+spec:
+  strategy:
+    type: "JenkinsPipeline"
+    jenkinsPipelineStrategy:
+      env:
+        - name: "APPLICATION_SOURCE_REPO"
+          value: "https://github.com/redhat-mal/spring-rest-service.git"
+        - name: "APPLICATION_SOURCE_REF"
+          value: "main"
+        - name: "APP_NAME"
+          value: "spring-rest-jenkins"
+      jenkinsfile: |-
+        pipeline {
+          agent {
+            label 'maven'
+          }
+
+          stages {
+            stage('Git Checkout') {
+              steps {
+                git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
+              }
+            }
+
+            stage('Build') {
+              steps {
+                sh "mvn -B clean install -DskipTests=true -f pom.xml"
+              }
+            }
+
+
+            stage('Build Container Image') {
+              steps {
+                sh """
+                  ls ${TARGET}/*
+                  rm -rf oc-build && mkdir -p oc-build/deployments
+                  for t in \$(echo "jar;war;ear" | tr ";" "\\n"); do
+                    cp -rfv ./${TARGET}/*.\$t oc-build/deployments/ 2> /dev/null || echo "No \$t files"
+                  done
+                  oc start-build ${env.APP_NAME}-build --from-dir oc-build/deployments --wait 
+                """
+              }
+            }
+
+          }
+        }
+
+        println "Application ${env.APP_NAME} is now in Production!"
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+  labels:
+    app.pelorus/name: spring-rest-jenkins
+  name: spring-rest-jenkins-build
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: spring-rest-jenkins:latest
+  source:
+    binary: {}
+    type: Binary
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: openjdk-11-rhel8:1.0
+        namespace: openshift
+    type: Source
