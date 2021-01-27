@@ -17,7 +17,7 @@ spec:
         - name: application_tag
           value: latest
         - name: build.namespace
-          value: spring-rest-build
+          value: att-pipelines
         - name: pipeline.deploy
           value: 'true'
         - name: application_name
